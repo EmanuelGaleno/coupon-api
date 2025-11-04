@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  coupon-postgres:
+    image: postgres:15
+    container_name: coupon-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: coupon-api
+    ports:
+      - "5438:5432"
