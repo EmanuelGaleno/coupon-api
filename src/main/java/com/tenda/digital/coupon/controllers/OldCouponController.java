@@ -25,7 +25,7 @@ import java.util.UUID;
 @RequestMapping("/coupon")
 @Tags(value = @Tag(name = "Coupon", description = "Endpoints relacionados à gestão de cupons."))
 @RequiredArgsConstructor
-public class CouponController {
+public class OldCouponController {
 
     private final ICouponBO couponBO;
 

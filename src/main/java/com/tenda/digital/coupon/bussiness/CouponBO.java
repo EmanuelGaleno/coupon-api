@@ -10,7 +10,7 @@ import com.tenda.digital.coupon.models.dto.CouponDTO;
 import com.tenda.digital.coupon.models.dto.CouponUpdateDTO;
 import com.tenda.digital.coupon.models.dto.CouponRedeemedDTO;
 import com.tenda.digital.coupon.models.dto.CouponResponseDTO;
-import com.tenda.digital.coupon.repositories.CouponRepository;
+import com.tenda.digital.coupon.repositories.OldCouponRepository;
 import com.tenda.digital.coupon.bussiness.interfaces.ICouponBO;
 import com.tenda.digital.exception.generics.BadRequestException;
 import com.tenda.digital.exception.generics.ResourceNotFoundException;
@@ -19,7 +19,7 @@ import com.tenda.digital.exception.generics.ResourceNotFoundException;
 @RequiredArgsConstructor
 public class CouponBO implements ICouponBO {
 
-    private final CouponRepository couponRepository;
+    private final OldCouponRepository oldCouponRepository;
 
     public CouponResponseDTO createCoupon(CouponDTO dto) {
 
@@ -27,34 +27,34 @@ public class CouponBO implements ICouponBO {
 
         CouponEntity couponEntity = dto.toEntity();
 
-        return CouponResponseDTO.fromCoupon(couponRepository.save(couponEntity));
+        return CouponResponseDTO.fromCoupon(oldCouponRepository.save(couponEntity));
     }
 
     public CouponResponseDTO getCouponByCode(String code) {
-        return couponRepository.findByCode(code).map(CouponResponseDTO::fromCoupon)
+        return oldCouponRepository.findByCode(code).map(CouponResponseDTO::fromCoupon)
                 .orElseThrow(() -> new ResourceNotFoundException("coupon not found"));
     }
 
     @Override
     public CouponResponseDTO getCouponById(UUID id) {
-        return couponRepository.findById(id).map(CouponResponseDTO::fromCoupon)
+        return oldCouponRepository.findById(id).map(CouponResponseDTO::fromCoupon)
                 .orElseThrow(() -> new ResourceNotFoundException("coupon not found"));
     }
 
     public CouponResponseDTO publishCoupon(UUID id) {
-        CouponEntity couponEntity = couponRepository.findById(id)
+        CouponEntity couponEntity = oldCouponRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("coupon not found"));
 
         if (couponEntity.getDiscountValue() < 0.5) {
             throw new BadRequestException("cannot publish coupon with discount < 0.5");
         }
         couponEntity.setPublished(true);
-        return CouponResponseDTO.fromCoupon(couponRepository.save(couponEntity));
+        return CouponResponseDTO.fromCoupon(oldCouponRepository.save(couponEntity));
     }
 
     public CouponRedeemedDTO redeemCoupon(UUID id) {
 
-        CouponEntity couponEntity = couponRepository.findById(id)
+        CouponEntity couponEntity = oldCouponRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("coupon not found"));
 
         if (couponEntity.getPublished() != null && !couponEntity.getPublished()) {
@@ -67,14 +67,14 @@ public class CouponBO implements ICouponBO {
 
         couponEntity.setRedeemed(true);
 
-        couponRepository.save(couponEntity);
+        oldCouponRepository.save(couponEntity);
 
         return new CouponRedeemedDTO(couponEntity.getId(), couponEntity.getRedeemed());
     }
 
     public CouponUpdateDTO updateCoupon(UUID id, CouponUpdateDTO dto) {
 
-        CouponEntity couponEntity = couponRepository.findById(id)
+        CouponEntity couponEntity = oldCouponRepository.findById(id)
                .orElseThrow(() -> new ResourceNotFoundException("coupon not found"));
 
         couponEntity.setCode(dto.getCode());
@@ -83,7 +83,7 @@ public class CouponBO implements ICouponBO {
         couponEntity.setExpirationDate(dto.getExpirationDate());
         couponEntity.setPublished(dto.getPublished());
 
-        return CouponUpdateDTO.fromCoupon(couponRepository.save(couponEntity));
+        return CouponUpdateDTO.fromCoupon(oldCouponRepository.save(couponEntity));
     }
 
 }

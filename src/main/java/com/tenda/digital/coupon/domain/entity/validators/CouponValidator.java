@@ -1,10 +1,10 @@
-package com.tenda.digital.coupon.domain.entity;
+package com.tenda.digital.coupon.domain.entity.validators;
 
 import br.com.fluentvalidator.AbstractValidator;
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 
 import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
 import static br.com.fluentvalidator.predicate.StringPredicate.stringEmptyOrNull;
-import java.time.LocalDate;
 
 public class CouponValidator extends AbstractValidator<Coupon> {
 
@@ -22,10 +22,6 @@ public class CouponValidator extends AbstractValidator<Coupon> {
         ruleFor(Coupon::getDiscountValue)
                 .must(v -> v != null && v >= 0.5)
                 .withMessage("O valor de desconto deve ser pelo menos 0.5.");
-
-        ruleFor(Coupon::getExpirationDate)
-                .must(date -> date != null && date.isAfter(LocalDate.now()))
-                .withMessage("A data de expiração deve ser futura ou válida.");
 
         ruleFor(Coupon::getPublished)
                 .must(p -> p == null || p.equals(true) || p.equals(false))

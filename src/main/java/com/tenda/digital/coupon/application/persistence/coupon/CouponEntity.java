@@ -5,15 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "coupon")
+@Table(name = "coupon", indexes = {
+        @Index(columnList = "created_at, updated_at, redeemed, published, expiration_date, code, discount_value")
+})
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,7 +21,6 @@ import java.util.UUID;
 public class CouponEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "code", unique = true, nullable = false)
@@ -42,19 +41,11 @@ public class CouponEntity {
     @Column(name = "redeemed")
     private Boolean redeemed;
 
-    @CreationTimestamp
-    @Column(name = "createdAt", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updatedAt", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-
-    public CouponEntity(String code, String description, Double discountValue, LocalDate expirationDate, Boolean published) {
-        this.code = code;
-        this.description = description;
-        this.discountValue = discountValue;
-        this.expirationDate = expirationDate;
-        this.published = published;
-    }
 }

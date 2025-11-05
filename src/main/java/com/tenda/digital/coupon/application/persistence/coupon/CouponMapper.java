@@ -1,16 +1,13 @@
 package com.tenda.digital.coupon.application.persistence.coupon;
 
-import com.tenda.digital.coupon.domain.entity.Coupon;
-import jakarta.annotation.Nullable;
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CouponMapper {
 
-    public @Nullable CouponEntity toEntity(Coupon domain) {
-        if (domain == null) {
-            return null;
-        }
+    public CouponEntity toEntity(Coupon domain) {
 
         CouponEntity entity = new CouponEntity();
         entity.setId(domain.getId());
@@ -25,19 +22,19 @@ public class CouponMapper {
         return entity;
     }
 
-    public @Nullable Coupon toDomain(CouponEntity entity) {
-        if (entity == null) {
-            return null;
-        }
+    public Coupon toDomain(CouponEntity entity) {
+
+        CouponData data = CouponData.builder()
+                .code(entity.getCode())
+                .description(entity.getDescription())
+                .discountValue(entity.getDiscountValue())
+                .published(entity.getPublished())
+                .redeemed(entity.getRedeemed())
+                .build();
 
         return Coupon.rebuild(
+                data,
                 entity.getId(),
-                entity.getCode(),
-                entity.getDescription(),
-                entity.getDiscountValue(),
-                entity.getExpirationDate(),
-                entity.getPublished(),
-                entity.getRedeemed(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt()
         );

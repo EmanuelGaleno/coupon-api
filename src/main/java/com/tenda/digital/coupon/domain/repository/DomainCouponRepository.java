@@ -1,7 +1,7 @@
 package com.tenda.digital.coupon.domain.repository;
 
 
-import com.tenda.digital.coupon.domain.entity.Coupon;
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 
 import java.util.Optional;
 import java.util.UUID;

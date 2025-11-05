@@ -1,10 +1,9 @@
 package com.tenda.digital.coupon.application.persistence.coupon;
 
-import com.tenda.digital.coupon.domain.entity.Coupon;
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 import com.tenda.digital.coupon.domain.repository.DomainCouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 import java.util.UUID;
 
