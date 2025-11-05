@@ -11,7 +11,7 @@ public class CouponValidator extends AbstractValidator<Coupon> {
     @Override
     public void rules() {
 
-        ruleFor(Coupon::getCode)
+        ruleFor(coupon -> coupon.getCode() != null ? coupon.getCode().getValue() : null)
                 .must(not(stringEmptyOrNull()))
                 .withMessage("O código do cupom é obrigatório.");
 

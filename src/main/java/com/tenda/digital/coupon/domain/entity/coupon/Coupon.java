@@ -8,6 +8,7 @@ import br.com.fluentvalidator.context.Error;
 import br.com.fluentvalidator.context.ValidationResult;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 import com.tenda.digital.coupon.domain.entity.validators.CouponValidator;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import lombok.Getter;
 public class Coupon {
 
     private final UUID id;
-    private String code;
+    private CouponCode code;
     private String description;
     private Double discountValue;
     private LocalDate expirationDate;
@@ -29,7 +30,6 @@ public class Coupon {
     private static final CouponValidator validator = new CouponValidator();
     private static final String CLAZZ = Coupon.class.getSimpleName();
 
-
     public static Coupon create(CouponData data) {
         Coupon coupon = Coupon.builder()
                 .id(UUID.randomUUID())
@@ -37,8 +37,8 @@ public class Coupon {
                 .description(data.getDescription())
                 .discountValue(data.getDiscountValue())
                 .expirationDate(data.getExpirationDate())
-                .published(Boolean.FALSE)
-                .redeemed(Boolean.FALSE)
+                .published(false)
+                .redeemed(false)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -66,10 +66,10 @@ public class Coupon {
 
     public void publish() {
         if (discountValue < 0.5) {
-            throw new DomainException("não é permitido publicar um cupom com desconto menor que 0.5.");
+            throw new DomainException("Não é permitido publicar um cupom com desconto menor que 0.5.");
         }
         if (isExpired()) {
-            throw new DomainException("não é permitido publicar um cupom expirado");
+            throw new DomainException("Não é permitido publicar um cupom expirado.");
         }
         this.published = true;
         this.updatedAt = LocalDateTime.now();
@@ -77,22 +77,21 @@ public class Coupon {
 
     public void redeem() {
         if (Boolean.FALSE.equals(published)) {
-            throw new DomainException("não é possível resgatar um cupom não publicado.");
+            throw new DomainException("Não é possível resgatar um cupom não publicado.");
         }
         if (isExpired()) {
-            throw new DomainException("cupom expirado.");
+            throw new DomainException("Cupom expirado.");
         }
         this.redeemed = true;
         this.updatedAt = LocalDateTime.now();
     }
 
     public boolean isExpired() {
-        return expirationDate != null
-                && expirationDate.isBefore(LocalDate.now());
+        return expirationDate != null && expirationDate.isBefore(LocalDate.now());
     }
 
-    public void update(String code, String description, Double discountValue, LocalDate expirationDate) {
-        this.code = code;
+    public void update(String rawCode, String description, Double discountValue, LocalDate expirationDate) {
+        this.code = CouponCode.of(rawCode);
         this.description = description;
         this.discountValue = discountValue;
         this.expirationDate = expirationDate;
@@ -104,7 +103,7 @@ public class Coupon {
         ValidationResult result = validator.validate(coupon);
         if (!result.isValid()) {
             throw new DomainException(
-                    "falha ao validar instância de " + CLAZZ,
+                    "Falha ao validar instância de " + CLAZZ,
                     result.getErrors().stream().map(Error::getMessage).toList()
             );
         }

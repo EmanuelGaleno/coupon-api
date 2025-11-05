@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Builder
 public class CouponData {
 
-    private String code;
+    private CouponCode code;
     private String description;
     private Double discountValue;
     private LocalDate expirationDate;
