@@ -30,6 +30,7 @@ public class CouponMapper {
                 .code(CouponCode.of(entity.getCode()))
                 .description(CouponDescription.of(entity.getDescription()))
                 .discountValue(entity.getDiscountValue())
+                .expirationDate(entity.getExpirationDate())
                 .published(entity.getPublished())
                 .redeemed(entity.getRedeemed())
                 .build();

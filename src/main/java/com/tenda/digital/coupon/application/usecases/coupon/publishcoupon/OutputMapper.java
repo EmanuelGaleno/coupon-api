@@ -1,0 +1,20 @@
+package com.tenda.digital.coupon.application.usecases.coupon.publishcoupon;
+
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
+
+public class OutputMapper {
+
+    private OutputMapper() {}
+
+    static PublishCouponResponseDTO toOutput (Coupon coupon) {
+        return new PublishCouponResponseDTO(
+                coupon.getId(),
+                coupon.getCode().value(),
+                coupon.getDescription().value(),
+                coupon.getDiscountValue(),
+                coupon.getExpirationDate(),
+                coupon.getPublished()
+        );
+    }
+}
