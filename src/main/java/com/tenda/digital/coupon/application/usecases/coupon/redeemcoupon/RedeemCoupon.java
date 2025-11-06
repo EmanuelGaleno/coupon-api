@@ -12,7 +12,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RedeemCoupon implements RedeemCouponUsecase {
+public class RedeemCoupon implements RedeemCouponUseCase {
 
     private final DomainCouponRepository domainCouponRepository;
 

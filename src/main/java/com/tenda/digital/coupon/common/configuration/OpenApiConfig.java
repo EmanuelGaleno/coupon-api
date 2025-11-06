@@ -1,4 +1,4 @@
-package com.tenda.digital.coupon.configurations;
+package com.tenda.digital.coupon.common.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

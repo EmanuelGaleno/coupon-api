@@ -3,6 +3,7 @@ package com.tenda.digital.coupon.domain.entity.valueobjects;
 import com.tenda.digital.coupon.application.utility.StringTransformUtil;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 
+
 public record CouponCode(String value) {
 
     public CouponCode(String value) {

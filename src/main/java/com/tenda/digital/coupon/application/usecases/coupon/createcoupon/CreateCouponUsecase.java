@@ -1,5 +1,6 @@
 package com.tenda.digital.coupon.application.usecases.coupon.createcoupon;
 
-public interface CreateCouponUsecase {
-    CreateCouponResponseDTO execute(CreateCouponRequestDTO input);
-}
+
+import com.tenda.digital.coupon.application.usecases.UseCase;
+
+public interface CreateCouponUsecase extends UseCase<CreateCouponRequestDTO, CreateCouponResponseDTO> {}

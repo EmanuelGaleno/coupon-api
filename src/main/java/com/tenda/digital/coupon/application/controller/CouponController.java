@@ -12,7 +12,7 @@ import com.tenda.digital.coupon.application.usecases.coupon.getcouponbyid.GetCou
 import com.tenda.digital.coupon.application.usecases.coupon.publishcoupon.PublishCouponResponseDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.publishcoupon.PublishCouponUseCase;
 import com.tenda.digital.coupon.application.usecases.coupon.redeemcoupon.RedeemCouponResponseDTO;
-import com.tenda.digital.coupon.application.usecases.coupon.redeemcoupon.RedeemCouponUsecase;
+import com.tenda.digital.coupon.application.usecases.coupon.redeemcoupon.RedeemCouponUseCase;
 import com.tenda.digital.coupon.application.usecases.coupon.updatecoupon.UpdateCouponRequestDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.updatecoupon.UpdateCouponResponseDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.updatecoupon.UpdateCouponUsecase;
@@ -35,7 +35,7 @@ public class CouponController implements CouponAPI {
     private final GetCouponByCodeUseCase getCouponByCodeUseCase;
     private final UpdateCouponUsecase updateCouponUsecase;
     private final PublishCouponUseCase publishCouponUseCase;
-    private final RedeemCouponUsecase redeemCouponUsecase;
+    private final RedeemCouponUseCase redeemCouponUsecase;
 
     @Override
     @PostMapping
