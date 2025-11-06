@@ -3,6 +3,7 @@ package com.tenda.digital.coupon.application.persistence.coupon;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +13,8 @@ public class CouponMapper {
 
         CouponEntity entity = new CouponEntity();
         entity.setId(domain.getId());
-        entity.setCode(domain.getCode().getValue());
-        entity.setDescription(domain.getDescription());
+        entity.setCode(domain.getCode().value());
+        entity.setDescription(domain.getDescription().value());
         entity.setDiscountValue(domain.getDiscountValue());
         entity.setExpirationDate(domain.getExpirationDate());
         entity.setPublished(domain.getPublished());
@@ -27,7 +28,7 @@ public class CouponMapper {
 
         CouponData data = CouponData.builder()
                 .code(CouponCode.of(entity.getCode()))
-                .description(entity.getDescription())
+                .description(CouponDescription.of(entity.getDescription()))
                 .discountValue(entity.getDiscountValue())
                 .published(entity.getPublished())
                 .redeemed(entity.getRedeemed())

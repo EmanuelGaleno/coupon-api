@@ -11,11 +11,11 @@ public class CouponValidator extends AbstractValidator<Coupon> {
     @Override
     public void rules() {
 
-        ruleFor(coupon -> coupon.getCode() != null ? coupon.getCode().getValue() : null)
+        ruleFor(coupon -> coupon.getCode() != null ? coupon.getCode().value() : null)
                 .must(not(stringEmptyOrNull()))
                 .withMessage("O código do cupom é obrigatório.");
 
-        ruleFor(Coupon::getDescription)
+        ruleFor(coupon -> coupon.getDescription() != null ? coupon.getDescription().value() : null)
                 .must(not(stringEmptyOrNull()))
                 .withMessage("A descrição é obrigatória.");
 

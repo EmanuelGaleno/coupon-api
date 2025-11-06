@@ -3,13 +3,13 @@ package com.tenda.digital.coupon.domain.entity.coupon;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import br.com.fluentvalidator.context.Error;
 import br.com.fluentvalidator.context.ValidationResult;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 import com.tenda.digital.coupon.domain.entity.validators.CouponValidator;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ public class Coupon {
 
     private final UUID id;
     private CouponCode code;
-    private String description;
+    private CouponDescription description;
     private Double discountValue;
     private LocalDate expirationDate;
     private Boolean published;
@@ -92,7 +92,7 @@ public class Coupon {
 
     public void update(String rawCode, String description, Double discountValue, LocalDate expirationDate) {
         this.code = CouponCode.of(rawCode);
-        this.description = description;
+        this.description = CouponDescription.of(description);
         this.discountValue = discountValue;
         this.expirationDate = expirationDate;
         selfValidate(this);

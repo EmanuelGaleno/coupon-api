@@ -4,6 +4,7 @@ import com.tenda.digital.coupon.common.exceptions.DomainException;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
+import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
 import com.tenda.digital.coupon.domain.repository.DomainCouponRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,11 @@ public class CreateCoupon implements CreateCouponUsecase {
 
     @Override
     public CreateCouponResponseDTO execute(CreateCouponRequestDTO input) {
-        log.debug("criando cupom com código: {}", input.getCode());
 
         try {
             CouponData data = CouponData.builder()
                     .code(CouponCode.of(input.getCode()))
-                    .description(input.getDescription())
+                    .description(CouponDescription.of(input.getDescription()))
                     .discountValue(input.getDiscountValue())
                     .expirationDate(input.getExpirationDate())
                     .published(false)
@@ -32,15 +32,14 @@ public class CreateCoupon implements CreateCouponUsecase {
 
             Coupon coupon = Coupon.create(data);
 
-
             Coupon savedCoupon = domainCouponRepository.save(coupon);
 
-            log.info("cupom criado com sucesso: {}", savedCoupon.getCode().getValue());
+            log.info("cupom criado com sucesso: {}", savedCoupon.getCode().value());
 
             return new CreateCouponResponseDTO(
                     savedCoupon.getId(),
-                    savedCoupon.getCode().getValue(),
-                    savedCoupon.getDescription(),
+                    savedCoupon.getCode().value(),
+                    savedCoupon.getDescription().value(),
                     savedCoupon.getDiscountValue(),
                     savedCoupon.getExpirationDate()
             );

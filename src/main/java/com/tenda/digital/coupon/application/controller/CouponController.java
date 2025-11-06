@@ -2,12 +2,12 @@ package com.tenda.digital.coupon.application.controller;
 
 
 import com.tenda.digital.coupon.application.controller.docs.CouponAPI;
-import com.tenda.digital.coupon.application.persistence.coupon.CouponRepository;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponRequestDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponUsecase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +28,7 @@ public class CouponController implements CouponAPI {
             @RequestBody CreateCouponRequestDTO request
     ){
         CreateCouponResponseDTO createCouponResponseDTO = createCouponUsecase.execute(request);
-        return ResponseEntity.ok(createCouponResponseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createCouponResponseDTO);
     }
 
 }

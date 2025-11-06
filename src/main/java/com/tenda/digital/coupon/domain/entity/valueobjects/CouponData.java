@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class CouponData {
 
     private CouponCode code;
-    private String description;
+    private CouponDescription description;
     private Double discountValue;
     private LocalDate expirationDate;
     private Boolean published;
