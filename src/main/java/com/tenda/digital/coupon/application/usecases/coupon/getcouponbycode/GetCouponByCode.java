@@ -17,14 +17,13 @@ public class GetCouponByCode implements GetCouponByCodeUseCase {
 
     @Override
     public GetCouponByCodeResponseDTO execute(String code) {
-        log.debug("buscando cupom com código: {}", code);
+
         try {
             Coupon coupon = domainCouponRepository.findByCode(code)
                     .orElseThrow(() -> new DomainException("cupom não encontrado para o código: " + code));
 
             return OutputMapper.toOutput(coupon);
-        } catch (DomainException ex) {
-            throw ex;
+
         } catch (Exception ex) {
             log.error("erro ao buscar cupom por código: {}", ex.getMessage(), ex);
             throw new DomainException("erro ao buscar cupom por código: " + ex.getMessage());

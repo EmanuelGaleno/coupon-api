@@ -31,7 +31,6 @@ public class CreateCoupon implements CreateCouponUsecase {
                     .build();
 
             Coupon coupon = Coupon.create(data);
-
             Coupon savedCoupon = domainCouponRepository.save(coupon);
 
             log.info("cupom criado com sucesso: {}", savedCoupon.getCode().value());

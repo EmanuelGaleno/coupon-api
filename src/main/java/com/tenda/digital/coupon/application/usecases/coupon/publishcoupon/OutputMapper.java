@@ -1,7 +1,6 @@
 package com.tenda.digital.coupon.application.usecases.coupon.publishcoupon;
 
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
 
 public class OutputMapper {
 

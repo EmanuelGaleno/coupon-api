@@ -18,17 +18,16 @@ public class GetCouponById implements GetCouponByIdUseCase {
 
     @Override
     public GetCouponByIdResponseDTO execute(UUID id) {
-        log.debug("Buscando cupom com ID: {}", id);
+
         try {
             Coupon coupon = domainCouponRepository.findById(id)
-                    .orElseThrow(() -> new DomainException("Cupom não encontrado para o ID: " + id));
+                    .orElseThrow(() -> new DomainException("cupom não encontrado para o id: " + id));
 
             return OutputMapper.toOutput(coupon);
-        } catch (DomainException ex) {
-            throw ex;
+
         } catch (Exception ex) {
-            log.error("Erro ao buscar cupom por ID: {}", ex.getMessage(), ex);
-            throw new DomainException("Erro ao buscar cupom por ID: " + ex.getMessage());
+            log.error("erro ao buscar cupom por id: {}", ex.getMessage(), ex);
+            throw new DomainException("erro ao buscar cupom por id: " + ex.getMessage());
         }
     }
 }

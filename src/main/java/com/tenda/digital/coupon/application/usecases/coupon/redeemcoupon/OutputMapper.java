@@ -2,7 +2,6 @@ package com.tenda.digital.coupon.application.usecases.coupon.redeemcoupon;
 
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 
-import java.util.UUID;
 
 public class OutputMapper {
 
