@@ -44,7 +44,6 @@ public class CreateCoupon implements CreateCouponUsecase {
             );
 
         } catch (Exception ex) {
-            log.error("erro ao criar cupom: {}", ex.getMessage(), ex);
             throw new DomainException("erro ao criar cupom: " + ex.getMessage());
         }
     }

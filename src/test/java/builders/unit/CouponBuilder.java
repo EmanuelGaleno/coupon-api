@@ -1,5 +1,6 @@
 package builders.unit;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import java.time.LocalDate;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
@@ -28,7 +29,7 @@ public class CouponBuilder {
     }
 
     public static Coupon rebuildCoupon(UUID id, CouponData data) {
-        return Coupon.rebuild(data, id, java.time.LocalDateTime.now(), java.time.LocalDateTime.now());
+        return Coupon.rebuild(data, id, LocalDateTime.now(), LocalDateTime.now());
     }
 
     private static CouponData buildData(String code, String description, double discount, LocalDate expirationDate) {
