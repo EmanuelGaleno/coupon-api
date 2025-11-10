@@ -5,8 +5,8 @@ import java.util.UUID;
 import java.time.LocalDate;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
 
 public class CouponBuilder {
 

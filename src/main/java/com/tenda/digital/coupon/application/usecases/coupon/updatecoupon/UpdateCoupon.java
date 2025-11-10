@@ -19,25 +19,19 @@ public class UpdateCoupon implements UpdateCouponUsecase {
     @Override
     public UpdateCouponResponseDTO execute(UUID id, UpdateCouponRequestDTO request) {
 
-        try {
-            Coupon coupon = domainCouponRepository.findById(id)
-                    .orElseThrow(() -> new DomainException("cupom não encontrado para o id: " + id));
+        Coupon coupon = domainCouponRepository.findById(id)
+                .orElseThrow(() -> new DomainException("cupom não encontrado para o id: " + id));
 
-            coupon.update(
-                    request.getCode(),
-                    request.getDescription(),
-                    request.getDiscountValue(),
-                    request.getExpirationDate()
-            );
+        coupon.update(
+                request.getCode(),
+                request.getDescription(),
+                request.getDiscountValue(),
+                request.getExpirationDate()
+        );
 
-            Coupon updatedCoupon = domainCouponRepository.save(coupon);
+        Coupon updatedCoupon = domainCouponRepository.save(coupon);
 
-            log.info("cupom atualizado com sucesso: {}", updatedCoupon.getCode().value());
-            return OutputMapper.toOutput(updatedCoupon);
-
-        } catch (Exception ex) {
-            log.error("erro ao atualizar cupom: {}", ex.getMessage(), ex);
-            throw new DomainException("erro ao atualizar cupom: " + ex.getMessage());
-        }
+        log.info("cupom atualizado com sucesso: {}", updatedCoupon.getCode().value());
+        return OutputMapper.toOutput(updatedCoupon);
     }
 }

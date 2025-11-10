@@ -7,9 +7,9 @@ import br.com.fluentvalidator.context.Error;
 import br.com.fluentvalidator.context.ValidationResult;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 import com.tenda.digital.coupon.domain.entity.validators.CouponValidator;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -28,7 +28,6 @@ public class Coupon {
     private LocalDateTime updatedAt;
 
     private static final CouponValidator validator = new CouponValidator();
-    private static final String CLAZZ = Coupon.class.getSimpleName();
 
     public static Coupon create(CouponData data) {
         Coupon coupon = Coupon.builder()
@@ -73,6 +72,7 @@ public class Coupon {
         }
         this.published = true;
         this.updatedAt = LocalDateTime.now();
+        selfValidate(this);
     }
 
     public void redeem() {
@@ -84,6 +84,7 @@ public class Coupon {
         }
         this.redeemed = true;
         this.updatedAt = LocalDateTime.now();
+        selfValidate(this);
     }
 
     public boolean isExpired() {
@@ -95,15 +96,15 @@ public class Coupon {
         this.description = CouponDescription.of(description);
         this.discountValue = discountValue;
         this.expirationDate = expirationDate;
-        selfValidate(this);
         this.updatedAt = LocalDateTime.now();
+        selfValidate(this);
     }
 
     private static void selfValidate(Coupon coupon) {
         ValidationResult result = validator.validate(coupon);
         if (!result.isValid()) {
             throw new DomainException(
-                    "Falha ao validar instância de " + CLAZZ,
+                    "coupon com instancia invalida",
                     result.getErrors().stream().map(Error::getMessage).toList()
             );
         }

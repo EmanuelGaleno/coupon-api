@@ -1,9 +1,9 @@
 package com.tenda.digital.coupon.application.persistence.coupon;
 
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
 import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
 import org.springframework.stereotype.Component;
 
 @Component

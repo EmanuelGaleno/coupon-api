@@ -5,8 +5,8 @@ import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateC
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponCode;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponDescription;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
 import com.tenda.digital.coupon.domain.repository.DomainCouponRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

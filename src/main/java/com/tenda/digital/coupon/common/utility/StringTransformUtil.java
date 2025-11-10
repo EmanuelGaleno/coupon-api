@@ -1,4 +1,4 @@
-package com.tenda.digital.coupon.application.utility;
+package com.tenda.digital.coupon.common.utility;
 
 import java.text.Normalizer;
 import java.util.function.UnaryOperator;

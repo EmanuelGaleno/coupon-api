@@ -1,5 +1,7 @@
 package com.tenda.digital.coupon.domain.entity.valueobjects;
 
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
+import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDate;

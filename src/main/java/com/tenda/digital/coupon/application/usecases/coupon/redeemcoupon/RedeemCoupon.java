@@ -19,19 +19,13 @@ public class RedeemCoupon implements RedeemCouponUseCase {
     @Override
     public RedeemCouponResponseDTO execute(UUID id) {
 
-        try {
-            Coupon coupon = domainCouponRepository.findById(id)
-                    .orElseThrow(() -> new DomainException("cupom não encontrado para o id: " + id));
+        Coupon coupon = domainCouponRepository.findById(id)
+                .orElseThrow(() -> new DomainException("cupom não encontrado para o id: " + id));
 
-            coupon.redeem();
-            Coupon updatedCoupon = domainCouponRepository.save(coupon);
+        coupon.redeem();
+        Coupon updatedCoupon = domainCouponRepository.save(coupon);
 
-            log.info("cupom resgatado com sucesso: {}", updatedCoupon.getCode().value());
-            return OutputMapper.toOutput(updatedCoupon);
-
-        } catch (Exception ex) {
-            log.error("erro ao resgatar cupom: {}", ex.getMessage(), ex);
-            throw new DomainException("erro ao resgatar cupom: " + ex.getMessage());
-        }
+        log.info("cupom resgatado com sucesso: {}", updatedCoupon.getCode().value());
+        return OutputMapper.toOutput(updatedCoupon);
     }
 }

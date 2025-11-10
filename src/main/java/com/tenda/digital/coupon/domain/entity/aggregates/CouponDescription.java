@@ -1,6 +1,6 @@
-package com.tenda.digital.coupon.domain.entity.valueobjects;
+package com.tenda.digital.coupon.domain.entity.aggregates;
 
-import com.tenda.digital.coupon.application.utility.StringTransformUtil;
+import com.tenda.digital.coupon.common.utility.StringTransformUtil;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
 
 public record CouponDescription(String value) {
