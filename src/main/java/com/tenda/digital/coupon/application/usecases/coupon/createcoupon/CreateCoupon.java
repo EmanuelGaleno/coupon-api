@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class CreateCoupon implements CreateCouponUsecase {
 
     private final DomainCouponRepository domainCouponRepository;
+    private final OutputMapper outputMapper;
 
     @Override
     public CreateCouponResponseDTO execute(CreateCouponRequestDTO input) {
@@ -33,12 +34,6 @@ public class CreateCoupon implements CreateCouponUsecase {
 
         log.info("cupom criado com sucesso: {}", savedCoupon.getCode().value());
 
-        return new CreateCouponResponseDTO(
-                savedCoupon.getId(),
-                savedCoupon.getCode().value(),
-                savedCoupon.getDescription().value(),
-                savedCoupon.getDiscountValue(),
-                savedCoupon.getExpirationDate()
-        );
+        return outputMapper.toResponse(savedCoupon);
     }
 }
