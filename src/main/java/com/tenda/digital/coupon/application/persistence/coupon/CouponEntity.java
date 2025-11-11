@@ -22,7 +22,6 @@ import java.util.UUID;
                 @Index(name = "idx_coupon_discount_value", columnList = "discount_value")
         }
 )
-
 @Getter
 @Setter
 @AllArgsConstructor
