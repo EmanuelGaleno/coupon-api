@@ -6,7 +6,6 @@ import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
-
 import static builders.unit.CouponBuilder.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +17,10 @@ class CouponTest {
         Coupon coupon = Coupon.create(validCouponData());
 
         assertNotNull(coupon.getId());
+        assertNotNull(coupon.getCode());
+        assertNotNull(coupon.getDescription());
+        assertNotNull(coupon.getDiscountValue());
+        assertNotNull(coupon.getExpirationDate());
         assertFalse(coupon.getPublished());
         assertFalse(coupon.getRedeemed());
         assertNotNull(coupon.getCreatedAt());

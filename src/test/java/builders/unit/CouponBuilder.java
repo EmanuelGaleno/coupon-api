@@ -15,10 +15,6 @@ public class CouponBuilder {
         return buildData("EXPIRED", "expirado", 5.0, LocalDate.now().minusDays(1));
     }
 
-    public static CouponData customCouponData(String code, String description, double discount, LocalDate expirationDate) {
-        return buildData(code, description, discount, expirationDate);
-    }
-
     private static CouponData buildData(String code, String description, double discount, LocalDate expirationDate) {
         return CouponData.builder()
                 .code(CouponCode.of(code))

@@ -2,17 +2,11 @@ package com.tenda.digital.coupon.application.usecases.builders;
 
 import java.util.UUID;
 
-public class RedeemCouponBuilder {
+public final class RedeemCouponBuilder {
 
-    public static UUID validPublishedCouponId() {
-        return UUID.randomUUID();
-    }
+    private RedeemCouponBuilder() {}
 
-    public static UUID unpublishedCouponId() {
-        return UUID.randomUUID();
-    }
-
-    public static UUID expiredCouponId() {
-        return UUID.randomUUID();
+    public static UUID invalidCouponId() {
+        return UUID.fromString("00000000-0000-0000-0000-000000000000");
     }
 }

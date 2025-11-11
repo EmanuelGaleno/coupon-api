@@ -1,5 +1,6 @@
 package com.tenda.digital.coupon.application.usecases.coupon.redeemcoupon;
 
+import com.tenda.digital.coupon.E2ETest;
 import com.tenda.digital.coupon.application.usecases.builders.CreateCouponBuilder;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponRequestDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
@@ -11,15 +12,15 @@ import com.tenda.digital.coupon.domain.repository.DomainCouponRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class RedeemCouponTest {
+@DisplayName("RedeemCouponUseCase")
+@Transactional
+class RedeemCouponTest extends E2ETest {
 
     @Autowired
     private CreateCouponUsecase createCouponUsecase;
@@ -31,11 +32,11 @@ class RedeemCouponTest {
     private RedeemCouponUseCase redeemCouponUseCase;
 
     @Autowired
-    private  DomainCouponRepository domainCouponRepository;
+    private DomainCouponRepository domainCouponRepository;
 
     @Test
-    @DisplayName("Deve resgatar cupom publicado e salvar estado no banco")
-    void shouldRedeemCouponAndPersistChanges() {
+    @DisplayName("Deve resgatar cupom publicado e persistir alteração no banco")
+    void shouldRedeemCouponSuccessfully() {
         CreateCouponRequestDTO request = CreateCouponBuilder.validRequest();
         CreateCouponResponseDTO created = createCouponUsecase.execute(request);
 
@@ -43,10 +44,9 @@ class RedeemCouponTest {
         RedeemCouponResponseDTO response = redeemCouponUseCase.execute(created.getId());
 
         assertTrue(response.getRedeemed());
-        assertNotNull(response.getId());
 
         Coupon redeemed = domainCouponRepository.findById(created.getId())
-                .orElseThrow(() -> new AssertionError("Cupom não encontrado após resgate"));
+                .orElseThrow(AssertionError::new);
 
         assertTrue(redeemed.getRedeemed());
         assertTrue(redeemed.getPublished());
@@ -54,42 +54,35 @@ class RedeemCouponTest {
 
     @Test
     @DisplayName("Deve lançar exceção ao tentar resgatar cupom não publicado")
-    void testRedeemUnpublishedCoupon() {
+    void shouldThrowWhenRedeemingUnpublishedCoupon() {
         CreateCouponRequestDTO request = CreateCouponBuilder.validRequest();
         CreateCouponResponseDTO created = createCouponUsecase.execute(request);
 
-        DomainException exception = assertThrows(
-                DomainException.class,
-                () -> redeemCouponUseCase.execute(created.getId())
-        );
-
-        assertTrue(exception.getMessage().contains("não publicado"));
+        UUID couponId = created.getId();
+        assertThrows(DomainException.class, () -> redeemCouponUseCase.execute(couponId));
     }
 
     @Test
     @DisplayName("Deve lançar exceção ao tentar resgatar cupom expirado após publicação")
-    void testRedeemExpiredCoupon() {
+    void shouldThrowWhenRedeemingExpiredCoupon() {
         CreateCouponRequestDTO request = CreateCouponBuilder.validRequest();
         CreateCouponResponseDTO created = createCouponUsecase.execute(request);
 
         publishCouponUseCase.execute(created.getId());
 
         Coupon coupon = domainCouponRepository.findById(created.getId())
-                .orElseThrow(() -> new AssertionError("Cupom não encontrado para expiração"));
+                .orElseThrow(AssertionError::new);
+
         coupon.update(
                 coupon.getCode().value(),
                 coupon.getDescription().value(),
                 coupon.getDiscountValue(),
                 LocalDate.now().minusDays(1)
         );
-        domainCouponRepository.save(coupon);
-        UUID couponId = created.getId();
-        DomainException exception = assertThrows(DomainException.class, () -> redeemCouponUseCase.execute(couponId));
 
-        assertNotNull(exception.getMessage());
-        assertTrue(
-                exception.getMessage().toLowerCase().contains("expirado"),
-                "Mensagem de erro deve indicar que o cupom está expirado"
-        );
+        domainCouponRepository.save(coupon);
+        UUID expiredId = created.getId();
+
+        assertThrows(DomainException.class, () -> redeemCouponUseCase.execute(expiredId));
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.tenda.digital.coupon.application.usecases.builders.CreateCouponBuilder.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UseCase - CreateCoupon")
+@DisplayName("CreateCouponUseCase")
 @Transactional
 class CreateCouponTest extends E2ETest {
 
@@ -39,8 +39,7 @@ class CreateCouponTest extends E2ETest {
         assertNotNull(response.getExpirationDate());
 
         Coupon saved = domainCouponRepository.findById(response.getId())
-                .orElseThrow(() -> new AssertionError("Cupom não persistido no banco"));
-
+                .orElseThrow(AssertionError::new);
         assertEquals(response.getCode(), saved.getCode().value());
         assertFalse(saved.getPublished());
         assertFalse(saved.getRedeemed());
@@ -52,6 +51,7 @@ class CreateCouponTest extends E2ETest {
     @Test
     @DisplayName("Deve lançar exceção ao tentar criar cupom inválido")
     void shouldThrowExceptionWhenInvalidCoupon() {
-        assertThrows(DomainException.class, () -> createCoupon.execute(invalidRequest()));
+        CreateCouponRequestDTO invalid = invalidRequest();
+        assertThrows(DomainException.class, () -> createCoupon.execute(invalid));
     }
 }

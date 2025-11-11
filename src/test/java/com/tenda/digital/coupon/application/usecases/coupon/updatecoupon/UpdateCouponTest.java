@@ -1,5 +1,6 @@
 package com.tenda.digital.coupon.application.usecases.coupon.updatecoupon;
 
+import com.tenda.digital.coupon.E2ETest;
 import com.tenda.digital.coupon.application.usecases.builders.CreateCouponBuilder;
 import com.tenda.digital.coupon.application.usecases.builders.UpdateCouponBuilder;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
@@ -10,13 +11,12 @@ import com.tenda.digital.coupon.common.exceptions.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class UpdateCouponTest {
+@DisplayName("UpdateCouponUseCase")
+class UpdateCouponTest extends E2ETest {
 
     @Autowired
     private DomainCouponRepository domainCouponRepository;

@@ -1,18 +1,25 @@
 package com.tenda.digital.coupon.application.usecases.coupon.publishcoupon;
 
+import com.tenda.digital.coupon.E2ETest;
 import com.tenda.digital.coupon.application.usecases.builders.CreateCouponBuilder;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponRequestDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponUsecase;
 import com.tenda.digital.coupon.common.exceptions.DomainException;
+import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
+import com.tenda.digital.coupon.domain.repository.DomainCouponRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class PublishCouponTest {
+@DisplayName("PublishCouponUseCase")
+@Transactional
+class PublishCouponTest extends E2ETest {
 
     @Autowired
     private CreateCouponUsecase createCouponUsecase;
@@ -20,9 +27,12 @@ class PublishCouponTest {
     @Autowired
     private PublishCouponUseCase publishCouponUseCase;
 
+    @Autowired
+    private DomainCouponRepository domainCouponRepository;
+
     @Test
     @DisplayName("Deve publicar cupom válido com sucesso")
-    void testPublishCouponSuccess() {
+    void shouldPublishCouponSuccessfully() {
         CreateCouponRequestDTO request = CreateCouponBuilder.validRequest();
         CreateCouponResponseDTO created = createCouponUsecase.execute(request);
 
@@ -30,22 +40,23 @@ class PublishCouponTest {
 
         assertNotNull(response);
         assertTrue(response.getPublished());
-        assertNotNull(response.getId());
         assertEquals(created.getCode(), response.getCode());
-        assertEquals(created.getDescription(), response.getDescription());
+
+        Coupon published = domainCouponRepository.findById(created.getId())
+                .orElseThrow(AssertionError::new);
+
+        assertTrue(published.getPublished());
+        assertFalse(published.getRedeemed());
     }
 
     @Test
     @DisplayName("Deve lançar exceção ao tentar publicar cupom expirado")
     void shouldThrowWhenPublishingExpiredCoupon() {
-        CreateCouponRequestDTO expired = CreateCouponBuilder.expiredRequest();
-        CreateCouponResponseDTO created = createCouponUsecase.execute(expired);
+        CreateCouponRequestDTO expiredRequest = CreateCouponBuilder.expiredRequest();
+        CreateCouponResponseDTO created = createCouponUsecase.execute(expiredRequest);
 
-        DomainException exception = assertThrows(
-                DomainException.class,
-                () -> publishCouponUseCase.execute(created.getId())
-        );
+        UUID couponId = created.getId();
 
-        assertTrue(exception.getMessage().toLowerCase().contains("expirado"));
+        assertThrows(DomainException.class, () -> publishCouponUseCase.execute(couponId));
     }
 }

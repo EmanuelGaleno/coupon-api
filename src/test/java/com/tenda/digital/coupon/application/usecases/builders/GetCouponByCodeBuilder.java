@@ -1,6 +1,8 @@
 package com.tenda.digital.coupon.application.usecases.builders;
 
-public class GetCouponByCodeBuilder {
+public final class GetCouponByCodeBuilder {
+
+    private GetCouponByCodeBuilder() {}
 
     public static String validCouponCode() {
         return "CUPOM10";

@@ -1,6 +1,8 @@
 package com.tenda.digital.coupon.application.usecases.coupon.getcouponbyid;
 
+import com.tenda.digital.coupon.E2ETest;
 import com.tenda.digital.coupon.application.usecases.builders.CreateCouponBuilder;
+import com.tenda.digital.coupon.application.usecases.builders.GetCouponByIdBuilder;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponRequestDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
 import com.tenda.digital.coupon.application.usecases.coupon.createcoupon.CreateCouponUsecase;
@@ -8,14 +10,11 @@ import com.tenda.digital.coupon.common.exceptions.DomainException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class GetCouponByIdTest {
+@DisplayName("GetCouponByIdUseCase")
+class GetCouponByIdTest extends E2ETest {
 
     @Autowired
     private CreateCouponUsecase createCouponUsecase;
@@ -41,11 +40,11 @@ class GetCouponByIdTest {
     @Test
     @DisplayName("Deve lançar exceção ao buscar cupom inexistente por ID")
     void shouldThrowExceptionWhenIdNotFound() {
-        UUID randomId = UUID.randomUUID();
+        var invalidId = GetCouponByIdBuilder.invalidCouponId();
 
         DomainException exception = assertThrows(
                 DomainException.class,
-                () -> getCouponByIdUseCase.execute(randomId)
+                () -> getCouponByIdUseCase.execute(invalidId)
         );
 
         assertTrue(exception.getMessage().contains("não encontrado"));
