@@ -1,6 +1,5 @@
 package com.tenda.digital.coupon.application.usecases.coupon.createcoupon;
 
-
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 import org.springframework.stereotype.Component;
 

@@ -4,9 +4,10 @@ import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 
 public class OutputMapper {
 
-    private OutputMapper(){}
+    private OutputMapper() {
+    }
 
-    static GetCouponByCodeResponseDTO toOutput (Coupon coupon){
+    static GetCouponByCodeResponseDTO toOutput(Coupon coupon) {
         return new GetCouponByCodeResponseDTO(
                 coupon.getId(),
                 coupon.getCode().value(),

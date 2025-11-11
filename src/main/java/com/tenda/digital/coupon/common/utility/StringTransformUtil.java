@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 
 public class StringTransformUtil {
 
-    private StringTransformUtil() {}
+    private StringTransformUtil() {
+    }
 
     public static final UnaryOperator<String> removeExtraSpaces =
             str -> str == null ? null : Pattern.compile("\\s{2,}").matcher(str.trim()).replaceAll(" ");

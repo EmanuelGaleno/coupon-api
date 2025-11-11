@@ -10,9 +10,18 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "coupon", indexes = {
-        @Index(columnList = "created_at, updated_at, redeemed, published, expiration_date, code, discount_value")
-})
+@Table(
+        name = "coupon",
+        indexes = {
+                @Index(name = "idx_coupon_created_at", columnList = "created_at"),
+                @Index(name = "idx_coupon_updated_at", columnList = "updated_at"),
+                @Index(name = "idx_coupon_redeemed", columnList = "redeemed"),
+                @Index(name = "idx_coupon_published", columnList = "published"),
+                @Index(name = "idx_coupon_expiration_date", columnList = "expiration_date"),
+                @Index(name = "idx_coupon_code", columnList = "code"),
+                @Index(name = "idx_coupon_discount_value", columnList = "discount_value")
+        }
+)
 
 @Getter
 @Setter

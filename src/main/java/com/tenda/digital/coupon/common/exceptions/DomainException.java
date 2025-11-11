@@ -2,10 +2,8 @@ package com.tenda.digital.coupon.common.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
 import lombok.Getter;
 
 @Getter

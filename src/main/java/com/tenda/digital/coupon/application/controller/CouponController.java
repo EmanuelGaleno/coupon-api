@@ -39,9 +39,9 @@ public class CouponController implements CouponAPI {
 
     @Override
     @PostMapping
-    public ResponseEntity<CreateCouponResponseDTO>createCoupon(
+    public ResponseEntity<CreateCouponResponseDTO> createCoupon(
             @RequestBody CreateCouponRequestDTO request
-    ){
+    ) {
         CreateCouponResponseDTO createCouponResponseDTO = createCouponUsecase.execute(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createCouponResponseDTO);
     }

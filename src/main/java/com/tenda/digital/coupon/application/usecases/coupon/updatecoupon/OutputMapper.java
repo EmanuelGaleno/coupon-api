@@ -4,7 +4,8 @@ import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
 
 class OutputMapper {
 
-    private OutputMapper() {}
+    private OutputMapper() {
+    }
 
     static UpdateCouponResponseDTO toOutput(Coupon coupon) {
         return new UpdateCouponResponseDTO(

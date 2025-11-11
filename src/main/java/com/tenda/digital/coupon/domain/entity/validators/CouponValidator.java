@@ -2,7 +2,6 @@ package com.tenda.digital.coupon.domain.entity.validators;
 
 import br.com.fluentvalidator.AbstractValidator;
 import com.tenda.digital.coupon.domain.entity.coupon.Coupon;
-
 import static br.com.fluentvalidator.predicate.LogicalPredicate.not;
 import static br.com.fluentvalidator.predicate.StringPredicate.stringEmptyOrNull;
 
