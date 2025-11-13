@@ -136,14 +136,10 @@ Validação completa via **RestAssured**, incluindo:
 ```bash
 mvn spring-boot:run
 Executar testes:
-bash
-Copiar código
 mvn clean test
 O Testcontainers irá subir um PostgreSQL automaticamente.
 
 📄 Exemplo de Cupom (JSON)
-json
-Copiar código
 {
   "id": "uuid",
   "code": "CUPOM10",
