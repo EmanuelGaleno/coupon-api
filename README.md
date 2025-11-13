@@ -1,62 +1,76 @@
-# Coupon API (CRUD completo em Spring Boot + DDD + Arquitetura Hexagonal)
+# 🎟️ Coupon API — CRUD Completo com Spring Boot + DDD + Arquitetura Hexagonal
 
 API responsável pela criação, consulta, atualização, publicação e resgate de cupons promocionais.  
-Desenvolvida utilizando Java 21, Spring Boot 3, DDD, SOLID e princípios de Arquitetura Hexagonal.
+Desenvolvida com **Java 21**, **Spring Boot 3**, **DDD**, **SOLID** e princípios de **Arquitetura Hexagonal**.
 
 ---
 
-## Arquitetura
+## 🧱 Arquitetura
 
-A aplicação segue uma organização em camadas com isolamento claro entre domínio, aplicação e infraestrutura:
----
+A aplicação segue uma estrutura em camadas, com foco em isolamento e clareza entre responsabilidades:
 
-## Principais Funcionalidades
+```
+domain/ → Regra de negócio pura (Entities, Aggregates, VOs, Validators)
 
-- Criar cupom
-- Atualizar cupom
-- Buscar cupom por ID
-- Buscar cupom por código
-- Publicar cupom
-- Resgatar cupom
-- Validações completas do domínio
+application/ → Use Cases, Persistência, Controllers, DTOs, Mappers
 
----
+infrastructure/ → Configurações, Testcontainers
 
-## Endpoints
+tests/ → Testes de Domínio, Use Cases e E2E
+```
 
-| Método | Endpoint | Descrição |
-|--------|----------|-----------|
-| POST   | `/coupon` | Cria um cupom |
-| GET    | `/coupon/{id}` | Busca por ID |
-| GET    | `/coupon/code/{code}` | Busca por código |
-| PUT    | `/coupon/{id}` | Atualiza |
-| POST   | `/coupon/{id}/publish` | Publica o cupom |
-| POST   | `/coupon/{id}/redeem`  | Resgata o cupom |
 
 ---
 
-## Modelo de Domínio
+## 🚀 Funcionalidades
 
-A entidade `Coupon` contém todas as regras:
+- Criar cupom  
+- Atualizar cupom  
+- Buscar cupom por ID  
+- Buscar cupom por código  
+- Publicar cupom  
+- Resgatar cupom  
+- Validações completas de domínio via FluentValidator  
 
-- Cupom inicia como **não publicado** e **não resgatado**  
+---
+
+## 🔗 Endpoints
+
+| Método | Endpoint                  | Descrição              |
+|--------|---------------------------|------------------------|
+| POST   | `/coupon`                 | Criar cupom           |
+| GET    | `/coupon/{id}`            | Buscar por ID         |
+| GET    | `/coupon/code/{code}`     | Buscar por código     |
+| PUT    | `/coupon/{id}`            | Atualizar cupom       |
+| POST   | `/coupon/{id}/publish`    | Publicar cupom        |
+| POST   | `/coupon/{id}/redeem`     | Resgatar cupom        |
+
+---
+
+## 🧩 Modelo de Domínio
+
+A entidade `Coupon` concentra todas as regras de negócio:
+
+- Cupom nasce **não publicado** e **não resgatado**
 - Não pode ser publicado se:
-  - estiver expirado
-  - tiver desconto inferior a 0.5  
-- Não pode ser resgatado se:
-  - não estiver publicado
   - estiver expirado  
-- Todas as operações chamam automaticamente `selfValidate()`
+  - possuir desconto inferior a **0.5**
+- Não pode ser resgatado se:
+  - não estiver publicado  
+  - estiver expirado  
+- Toda operação chama `selfValidate()` para garantir consistência  
+- Campos controlados internamente:  
+  `createdAt`, `updatedAt`, `published`, `redeemed`
 
-Value Objects:
+### Value Objects
 
-- `CouponCode` — normaliza e valida códigos
-- `CouponDescription` — normaliza textos
-- `CouponData` — agrega dados essenciais
+- **CouponCode** → normaliza e valida código  
+- **CouponDescription** → normaliza e valida descrição  
+- **CouponData** → agrega propriedades essenciais  
 
 ---
 
-## Casos de Uso
+## 🧠 Casos de Uso
 
 - `CreateCoupon`
 - `GetCouponByIdUseCase`
@@ -65,35 +79,42 @@ Value Objects:
 - `PublishCouponUseCase`
 - `RedeemCouponUseCase`
 
-Cada caso de uso contém:
-- regra de aplicação
-- chamadas ao repositório
-- mapeamento para DTO
+Cada use case:
+- aplica regra de aplicação  
+- chama repositório  
+- retorna DTO via OutputMapper  
 
 ---
 
-## Testes
+## 🧪 Testes
 
-A aplicação possui testes em três níveis:
+A aplicação inclui testes completos divididos em três camadas:
 
-### 1. Testes de Domínio  
-Validam comportamento da entidade `Coupon`:
+### 1️⃣ Testes de Domínio
+Garantem que a entidade `Coupon` funciona corretamente:
 
-- criação
-- publicação
-- expiração
-- resgate
-- rebuild
+- Criação  
+- Publicação  
+- Resgate  
+- Expiração  
+- Rebuild a partir dos dados persistidos  
 
-### 2. Testes de Use Case  
-Executam cenários reais usando banco via Testcontainers.
+### 2️⃣ Testes de Use Case
+Executam cenários reais usando **Testcontainers + PostgreSQL**.
 
-### 3. Testes de Controller (E2E)  
-Utilizam RestAssured para validar endpoints reais.
+### 3️⃣ Testes E2E (Controller)
+Validação completa via **RestAssured**, incluindo:
+
+- Fluxo de criação  
+- Fluxo de atualização  
+- Publicar  
+- Resgatar  
+- Buscar por ID e código  
+- Erros de validação e regras de negócio  
 
 ---
 
-## Tecnologias
+## 🛠️ Tecnologias Utilizadas
 
 - Java 21  
 - Spring Boot 3  
@@ -104,22 +125,25 @@ Utilizam RestAssured para validar endpoints reais.
 - JUnit 5  
 - FluentValidator  
 - Lombok  
+- Docker  
+- Swagger/OpenAPI  
 
 ---
 
-## Como Rodar
+## ▶️ Como Rodar
 
 ### Iniciar aplicação:
 ```bash
 mvn spring-boot:run
-
-Rodar testes:
+Executar testes:
+bash
+Copiar código
 mvn clean test
+O Testcontainers irá subir um PostgreSQL automaticamente.
 
-
-Testcontainers irá subir o PostgreSQL automaticamente.
-
-Estrutura esperada do cupom
+📄 Exemplo de Cupom (JSON)
+json
+Copiar código
 {
   "id": "uuid",
   "code": "CUPOM10",
