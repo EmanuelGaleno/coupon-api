@@ -122,13 +122,19 @@ Validação completa via **RestAssured**, incluindo:
 ## ▶️ Como Rodar
 
 ### Detalhes da aplicação:
+Executar Aplicação:
 ```bash
 mvn spring-boot:run
+```
+
 Executar testes:
+```bash
 mvn clean test
-O Testcontainers irá subir um PostgreSQL automaticamente.
+```
+(O Testcontainers irá subir um PostgreSQL automaticamente)
 
 📄 Exemplo de Cupom (JSON)
+```bash
 {
   "id": "uuid",
   "code": "CUPOM10",
@@ -138,3 +144,4 @@ O Testcontainers irá subir um PostgreSQL automaticamente.
   "published": false,
   "redeemed": false
 }
+```
