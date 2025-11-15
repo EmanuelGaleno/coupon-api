@@ -1,7 +1,7 @@
 # 🎟️ Coupon API — CRUD Completo com Spring Boot + DDD + Arquitetura Hexagonal
 
 Micro sevico responsável pela criação, consulta, atualização, publicação e resgate de cupons promocionais.  
-Desenvolvida com **Java 21**, **Spring Boot 3**, **DDD**, **SOLID** e princípios de **Arquitetura Hexagonal**.
+Desenvolvida com **Java 21**, **Spring Boot**, **DDD**, **SOLID** e princípios de **Arquitetura Hexagonal**.
 
 ---
 
