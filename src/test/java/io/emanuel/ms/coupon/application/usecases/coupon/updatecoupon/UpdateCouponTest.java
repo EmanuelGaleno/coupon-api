@@ -1,0 +1,63 @@
+package io.emanuel.ms.coupon.application.usecases.coupon.updatecoupon;
+
+import io.emanuel.ms.coupon.E2ETest;
+import io.emanuel.ms.coupon.application.usecases.builders.CreateCouponBuilder;
+import io.emanuel.ms.coupon.application.usecases.builders.UpdateCouponBuilder;
+import io.emanuel.ms.coupon.application.usecases.coupon.createcoupon.CreateCouponResponseDTO;
+import io.emanuel.ms.coupon.application.usecases.coupon.createcoupon.CreateCouponUsecase;
+import io.emanuel.ms.coupon.domain.entity.coupon.Coupon;
+import io.emanuel.ms.coupon.domain.repository.DomainCouponRepository;
+import io.emanuel.ms.coupon.common.exceptions.DomainException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@DisplayName("UpdateCouponUseCase")
+class UpdateCouponTest extends E2ETest {
+
+    @Autowired
+    private DomainCouponRepository domainCouponRepository;
+
+    @Autowired
+    private UpdateCouponUsecase updateCouponUsecase;
+
+    @Autowired
+    private CreateCouponUsecase createCouponUsecase;
+
+    @Test
+    @DisplayName("Deve atualizar cupom")
+    void shouldUpdateCouponSuccessfully() {
+        CreateCouponResponseDTO created = createCouponUsecase.execute(CreateCouponBuilder.validRequest());
+        UpdateCouponRequestDTO update = UpdateCouponBuilder.validRequest();
+
+        UpdateCouponResponseDTO response = updateCouponUsecase.execute(created.getId(), update);
+
+        assertEquals(update.getCode(), response.getCode());
+        assertEquals(update.getDescription().toLowerCase(), response.getDescription());
+        assertEquals(update.getDiscountValue(), response.getDiscountValue());
+
+        Coupon updated = domainCouponRepository.findById(created.getId())
+                .orElseThrow(() -> new AssertionError("Cupom não encontrado no banco"));
+
+        assertEquals(update.getCode(), updated.getCode().value());
+        assertFalse(updated.getRedeemed());
+        assertFalse(updated.getPublished());
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção ao tentar atualizar cupom inexistente")
+    void testUpdateCouponNotFound() {
+        UUID randomId = UUID.randomUUID();
+        UpdateCouponRequestDTO request = UpdateCouponBuilder.validRequest();
+
+        DomainException exception = assertThrows(
+                DomainException.class,
+                () -> updateCouponUsecase.execute(randomId, request)
+        );
+
+        assertTrue(exception.getMessage().contains("não encontrado"));
+    }
+}

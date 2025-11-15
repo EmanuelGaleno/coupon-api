@@ -1,9 +1,9 @@
 package builders.unit;
 
 import java.time.LocalDate;
-import com.tenda.digital.coupon.domain.entity.valueobjects.CouponData;
-import com.tenda.digital.coupon.domain.entity.aggregates.CouponCode;
-import com.tenda.digital.coupon.domain.entity.aggregates.CouponDescription;
+import io.emanuel.ms.coupon.domain.entity.valueobjects.CouponData;
+import io.emanuel.ms.coupon.domain.entity.aggregates.CouponCode;
+import io.emanuel.ms.coupon.domain.entity.aggregates.CouponDescription;
 
 public class CouponBuilder {
 

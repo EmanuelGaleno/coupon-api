@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tenda.digital.couponEntity</groupId>
-    <artifactId>couponEntity-api</artifactId>
+    <groupId>io.duell.couponEntity</groupId>
+    <artifactId>ms-coupon-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>couponEntity-api</name>
 
@@ -18,11 +18,6 @@
     </parent>
 
     <repositories>
-        <repository>
-            <id>nexus-local</id>
-            <name>Nexus Tenda</name>
-            <url>https://services.tendaatacado.com.br/nexus/repository/maven-public</url>
-        </repository>
     </repositories>
 
     <dependencyManagement>

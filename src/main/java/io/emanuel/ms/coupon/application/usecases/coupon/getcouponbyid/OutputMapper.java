@@ -1,0 +1,21 @@
+package io.emanuel.ms.coupon.application.usecases.coupon.getcouponbyid;
+
+import io.emanuel.ms.coupon.domain.entity.coupon.Coupon;
+
+public class OutputMapper {
+
+    private OutputMapper() {
+    }
+
+    public static GetCouponByIdResponseDTO toOutput(Coupon coupon) {
+        return new GetCouponByIdResponseDTO(
+                coupon.getId(),
+                coupon.getCode().value(),
+                coupon.getDescription().value(),
+                coupon.getDiscountValue(),
+                coupon.getExpirationDate(),
+                coupon.getPublished(),
+                coupon.getRedeemed()
+        );
+    }
+}
