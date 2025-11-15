@@ -1,7 +1,7 @@
-# 🎟️ Coupon API — CRUD Completo com Spring Boot + DDD + Arquitetura Hexagonal
+# 🎟️ Coupon API — DDD + Arquitetura Hexagonal
 
-API responsável pela criação, consulta, atualização, publicação e resgate de cupons promocionais.  
-Desenvolvida com **Java 21**, **Spring Boot 3**, **DDD**, **SOLID** e princípios de **Arquitetura Hexagonal**.
+Microserviço responsável pela criação, consulta, atualização, publicação e resgate de cupons promocionais.  
+Desenvolvida com **Java 21**, **Spring Boot**, **DDD**, **SOLID** e princípios de **Arquitetura Hexagonal**.
 
 ---
 
@@ -29,8 +29,7 @@ tests/ → Testes de Domínio, Use Cases e E2E
 - Buscar cupom por ID  
 - Buscar cupom por código  
 - Publicar cupom  
-- Resgatar cupom  
-- Validações completas de domínio via FluentValidator  
+- Resgatar cupom 
 
 ---
 
@@ -57,17 +56,7 @@ A entidade `Coupon` concentra todas as regras de negócio:
   - possuir desconto inferior a **0.5**
 - Não pode ser resgatado se:
   - não estiver publicado  
-  - estiver expirado  
-- Toda operação chama `selfValidate()` para garantir consistência  
-- Campos controlados internamente:  
-  `createdAt`, `updatedAt`, `published`, `redeemed`
-
-### Value Objects
-
-- **CouponCode** → normaliza e valida código  
-- **CouponDescription** → normaliza e valida descrição  
-- **CouponData** → agrega propriedades essenciais  
-
+  - estiver expirado 
 ---
 
 ## 🧠 Casos de Uso
@@ -117,12 +106,12 @@ Validação completa via **RestAssured**, incluindo:
 ## 🛠️ Tecnologias Utilizadas
 
 - Java 21  
-- Spring Boot 3  
+- Spring Boot  
 - JPA / Hibernate  
 - PostgreSQL  
 - Testcontainers  
 - RestAssured  
-- JUnit 5  
+- JUnit
 - FluentValidator  
 - Lombok  
 - Docker  
@@ -132,14 +121,20 @@ Validação completa via **RestAssured**, incluindo:
 
 ## ▶️ Como Rodar
 
-### Iniciar aplicação:
+### Detalhes da aplicação:
+Executar Aplicação:
 ```bash
 mvn spring-boot:run
+```
+
 Executar testes:
+```bash
 mvn clean test
-O Testcontainers irá subir um PostgreSQL automaticamente.
+```
+(O Testcontainers irá subir um PostgreSQL automaticamente)
 
 📄 Exemplo de Cupom (JSON)
+```bash
 {
   "id": "uuid",
   "code": "CUPOM10",
@@ -149,3 +144,4 @@ O Testcontainers irá subir um PostgreSQL automaticamente.
   "published": false,
   "redeemed": false
 }
+```
